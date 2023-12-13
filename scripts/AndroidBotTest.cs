@@ -1,4 +1,5 @@
 ﻿using Aibote4Sharp.sdk;
+using Aibote4Sharp.sdk.options;
 using DotNetty.Transport.Channels;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,11 @@ namespace Aibote4Sharp.scripts
             sleep(5000);
             string? s = this.getAndroidId();
             Debug.WriteLine($"返回结果：{s}");
+
+            byte[] bytes = this.TakeScreenshot(new AiboteRegion());
+            Debug.WriteLine($"返回结果=========：{bytes.Length}");
+            File.WriteAllBytes("d:\\1.png", bytes);
+
         }
 
         public override string GetScriptName()

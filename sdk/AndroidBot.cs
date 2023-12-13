@@ -86,7 +86,6 @@ namespace Aibote4Sharp.sdk
         /// 截图保存在客户端本地了<br />
         /// thresh和maxval同为255时灰度处理
         /// </summary>
-        /// <param name="savePath">保存的位置</param>
         /// <param name="region">截图区域region默认全屏</param>
         /// <param name="thresholdType">
         /// 算法类型：<br />
@@ -100,8 +99,9 @@ namespace Aibote4Sharp.sdk
         /// </param>
         /// <param name="thresh">阈值</param>
         /// <param name="maxval">最大值</param>
+        /// <param name="scale">最大值</param>
         /// <returns>byte[]</returns>
-        public byte[] TakeScreenshot(string savePath, AiboteRegion region, int thresholdType = 0, int thresh = 0, int maxval = 0)
+        public byte[] TakeScreenshot(AiboteRegion region, int thresholdType = 0, int thresh = 0, int maxval = 0, float scale=1.0F)
         {
             if (thresholdType == 5 || thresholdType == 6)
             {
@@ -109,8 +109,8 @@ namespace Aibote4Sharp.sdk
                 maxval = 255;
             }
 
-            return this.BytesCmd("saveScreenshot", savePath, region.left.ToString(), region.top.ToString(),
-                region.right.ToString(), region.bottom.ToString(), thresholdType.ToString(), thresh.ToString(), maxval.ToString());
+            return this.BytesCmd("takeScreenshot", region.left.ToString(), region.top.ToString(),
+                region.right.ToString(), region.bottom.ToString(), thresholdType.ToString(), thresh.ToString(), maxval.ToString(), scale.ToString());
         }
 
         /// <summary>
@@ -567,10 +567,11 @@ namespace Aibote4Sharp.sdk
         /// </summary>
         /// <param name="yoloServerIp">yolo服务器IP。端口固定为9528</param>
         /// <param name="modelPath">模型路径</param>
+        /// <param name="classesPath">种类路径，CPU模式需要此参数</param>
         /// <returns>bool</returns>
-        public bool InitYolo(string yoloServerIp, string modelPath)
+        public bool InitYolo(string yoloServerIp, string modelPath, string classesPath)
         {
-            return this.BoolCmd("initYolo", yoloServerIp, modelPath);
+            return this.BoolCmd("initYolo", yoloServerIp, modelPath, classesPath);
         }
 
         /// <summary>
