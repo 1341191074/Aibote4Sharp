@@ -1,3 +1,3 @@
 # Aibote4Sharp
 
-### By Reach(QQ:1341191074)   Aibote4SharpΩª¡˜Q»∫£∫684404665
+### By Reach(QQ:1341191074)   Aibote4Sharp‰∫§ÊµÅQÁæ§Ôºö684404665
