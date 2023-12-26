@@ -6,11 +6,11 @@ using System.Text;
 
 namespace Aibote4Sharp
 {
-    public class EncoderHandler : MessageToByteEncoder<string[]>
+    public class AiboteEncoder : MessageToByteEncoder<string[]>
     {
         protected override void Encode(IChannelHandlerContext context, string[] message, IByteBuffer output)
         {
-            Trace.WriteLine("字符串编码器：" + message.Length);
+            //Trace.WriteLine("字符串编码器：" + message.Length);
             StringBuilder strData = new StringBuilder();
             StringBuilder tempStr = new StringBuilder();
             foreach (string msg in message)
@@ -21,15 +21,8 @@ namespace Aibote4Sharp
             }
             strData.Append('\n');
             strData.Append(tempStr);
+            Trace.WriteLine("字符串编码器：" + tempStr.ToString());
             output.WriteBytes(Encoding.UTF8.GetBytes(strData.ToString()));
-        }
-    }
-    public class BytesEncoderHandler : MessageToByteEncoder<byte[]>
-    {
-        protected override void Encode(IChannelHandlerContext context, byte[] message, IByteBuffer output)
-        {
-            Trace.WriteLine("字节数组编码器：" + message.Length);
-            output.WriteBytes(message);
         }
     }
 }

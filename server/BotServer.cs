@@ -37,8 +37,8 @@ namespace Aibote4Sharp
                     .ChildHandler(new ActionChannelInitializer<ISocketChannel>(channel =>
                     { // 
                         IChannelPipeline pipeline = channel.Pipeline;
-                        pipeline.AddLast("decoder", new DecoderHandler());
-                        pipeline.AddLast("encoder", new EncoderHandler());
+                        pipeline.AddLast("decoder", new AiboteDecoder());
+                        pipeline.AddLast("encoder", new AiboteEncoder());
                         pipeline.AddLast(new LoggingHandler("aibote-log"));
                         Handlers(pipeline);//注入自定义处理类
                     }));

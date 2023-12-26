@@ -6,11 +6,14 @@ namespace Aibote4Sharp.sdk
 {
     public abstract class Aibote
     {
-        private object lockObj = new object();//创建一个对
+        private object lockObj = new object();//创建一个
 
         public string? keyId { get; set; }
         public string? runStatus { get; set; }
-        public byte[]? retBuffer { get; set; }
+        private byte[]? retBuffer { get; set; }
+
+        private MemoryStream ms = new MemoryStream();
+
         public IChannelHandlerContext? aiboteChanel { get; set; }
 
         private long retTimeout = 1000; // 正常下获取返回值的时间。
@@ -27,6 +30,18 @@ namespace Aibote4Sharp.sdk
             this.aiboteChanel = aiboteChanel;
             this.runStatus = "未运行";
             Debug.WriteLine("调用了父类的构造方法");
+        }
+
+        public void ChannelRead0(byte[] msg)
+        {
+            this.ms.Write(msg);
+        }
+
+        public void ChannelReadComplete()
+        {
+            this.retBuffer = this.ms.ToArray();
+            Debug.WriteLine("retBuffer Length : " + retBuffer.Length);
+            this.ms.SetLength(0);
         }
 
         public abstract string GetScriptName();

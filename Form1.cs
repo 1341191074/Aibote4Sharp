@@ -8,7 +8,9 @@ namespace Aibote4Sharp
     public partial class Form1 : Form
     {
 
-        Thread? th;
+        Thread? t1;
+        Thread? t2;
+        Thread? t3;
         private DataTable aibotes = new DataTable();
 
         public Form1()
@@ -38,12 +40,40 @@ namespace Aibote4Sharp
 
         private void btn_startServer_Click(object sender, EventArgs e)
         {
-            Thread th = new Thread(() =>
+            btn_startServer.Enabled = false;
+            btn_stopServer.Enabled = true;
+            t1 = new Thread(() =>
+          {
+              try
+              {
+                  AndroidServer.getInstance().Start().Wait();
+              }
+              catch (AggregateException ee)
+              {
+                  Trace.TraceError(ee.Message);
+              }
+          });
+            t1.IsBackground = true;
+            t1.Start();
+
+            t2 = new Thread(() =>
             {
                 try
                 {
-                    AndroidServer.getInstance().Start().Wait();
                     WinServer.getInstance().Start().Wait();
+                }
+                catch (AggregateException ee)
+                {
+                    Trace.TraceError(ee.Message);
+                }
+            });
+            t2.IsBackground = true;
+            t2.Start();
+
+            t3 = new Thread(() =>
+            {
+                try
+                {
                     WebServer.getInstance().Start().Wait();
                 }
                 catch (AggregateException ee)
@@ -51,13 +81,18 @@ namespace Aibote4Sharp
                     Trace.TraceError(ee.Message);
                 }
             });
-            th.IsBackground = true;
-            th.Start();
+            t3.IsBackground = true;
+            t3.Start();
         }
 
         private void btn_stopServer_Click(object sender, EventArgs e)
         {
             AndroidServer.getInstance().ShutdownGracefully();
+            WinServer.getInstance().ShutdownGracefully();
+            WebServer.getInstance().ShutdownGracefully();
+            this.RemoveAllClient();
+            btn_startServer.Enabled = true;
+            btn_stopServer.Enabled = false;
         }
 
         public delegate void AddDelegate(String key);
@@ -80,6 +115,11 @@ namespace Aibote4Sharp
         {
             DataRow? row = aibotes.Rows.Find(key);
             aibotes.Rows.Remove(row);
+        }
+
+        public void RemoveAllClient()
+        {
+            aibotes.Rows.Clear();
         }
 
         private void btn_select_script_Click(object sender, EventArgs e)
@@ -121,20 +161,36 @@ namespace Aibote4Sharp
         {
             int result = 0;
             AiboteChannel? aiboteChannel = AndroidClientManager.getInstance().get(keyId);
-            aiboteChannel.setAibote(aibote);
-
-            if (aibote != null)
+            if (aiboteChannel != null)
             {
-                aibote.runStatus = "运行中";
-                refushClient(keyId, aibote);
-                Task task = new Task(() =>
+                aiboteChannel.setAibote(aibote);
+                if (aibote != null)
                 {
-                    aibote.DoScript();
-                });
-                task.Start();
-                await task;
+                    aibote.runStatus = "运行中";
+                    refushClient(keyId, aibote);
+                    Task task = new Task(() =>
+                    {
+                        aibote.DoScript();
+                    });
+                    task.Start();
+                    await task;
+                    aibote.runStatus = "执行完成";
+                    refushClient(keyId, aibote);
+                }
             }
             return result;
+        }
+
+        private void dataGridView1_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
+        {
+            if (e.StateChanged == DataGridViewElementStates.Selected)
+            {
+                btn_run_script.Enabled = true;
+            }
+            else
+            {
+                btn_run_script.Enabled = false;
+            }
         }
     }
 }

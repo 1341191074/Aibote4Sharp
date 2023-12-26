@@ -51,7 +51,7 @@
             // 
             // btn_startServer
             // 
-            btn_startServer.Location = new Point(88, 628);
+            btn_startServer.Location = new Point(76, 671);
             btn_startServer.Name = "btn_startServer";
             btn_startServer.Size = new Size(146, 73);
             btn_startServer.TabIndex = 0;
@@ -61,7 +61,8 @@
             // 
             // btn_stopServer
             // 
-            btn_stopServer.Location = new Point(372, 628);
+            btn_stopServer.Enabled = false;
+            btn_stopServer.Location = new Point(271, 671);
             btn_stopServer.Name = "btn_stopServer";
             btn_stopServer.Size = new Size(172, 73);
             btn_stopServer.TabIndex = 1;
@@ -87,7 +88,7 @@
             tabControl1.Location = new Point(12, 52);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(1398, 507);
+            tabControl1.Size = new Size(963, 507);
             tabControl1.TabIndex = 6;
             // 
             // tabPage1
@@ -96,7 +97,7 @@
             tabPage1.Location = new Point(4, 30);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(1390, 473);
+            tabPage1.Size = new Size(955, 473);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "安卓";
             tabPage1.UseVisualStyleBackColor = true;
@@ -117,33 +118,36 @@
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.Size = new Size(901, 438);
             dataGridView1.TabIndex = 0;
+            dataGridView1.RowStateChanged += dataGridView1_RowStateChanged;
             // 
             // keyId
             // 
-            keyId.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            keyId.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             keyId.DataPropertyName = "keyId";
             keyId.HeaderText = "ID号";
+            keyId.MinimumWidth = 100;
             keyId.Name = "keyId";
             keyId.ReadOnly = true;
-            keyId.Width = 68;
             // 
             // botName
             // 
-            botName.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            botName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             botName.DataPropertyName = "botName";
+            botName.FillWeight = 40F;
             botName.HeaderText = "名称";
+            botName.MinimumWidth = 130;
             botName.Name = "botName";
             botName.ReadOnly = true;
-            botName.Width = 67;
             // 
             // runStatus
             // 
-            runStatus.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            runStatus.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             runStatus.DataPropertyName = "runStatus";
+            runStatus.FillWeight = 40F;
             runStatus.HeaderText = "运行状态";
+            runStatus.MinimumWidth = 100;
             runStatus.Name = "runStatus";
             runStatus.ReadOnly = true;
-            runStatus.Width = 99;
             // 
             // aiboteClientManagerBindingSource
             // 
@@ -154,7 +158,7 @@
             tabPage2.Location = new Point(4, 30);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(1390, 473);
+            tabPage2.Size = new Size(955, 473);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "windows";
             tabPage2.UseVisualStyleBackColor = true;
@@ -163,16 +167,17 @@
             // 
             tabPage3.Location = new Point(4, 30);
             tabPage3.Name = "tabPage3";
-            tabPage3.Size = new Size(1390, 473);
+            tabPage3.Size = new Size(955, 473);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "Web";
             tabPage3.UseVisualStyleBackColor = true;
             // 
             // btn_select_script
             // 
-            btn_select_script.Location = new Point(1133, 658);
+            btn_select_script.Enabled = false;
+            btn_select_script.Location = new Point(646, 681);
             btn_select_script.Name = "btn_select_script";
-            btn_select_script.Size = new Size(110, 34);
+            btn_select_script.Size = new Size(110, 51);
             btn_select_script.TabIndex = 7;
             btn_select_script.Text = "选择脚本";
             btn_select_script.UseVisualStyleBackColor = true;
@@ -180,9 +185,10 @@
             // 
             // btn_run_script
             // 
-            btn_run_script.Location = new Point(1133, 724);
+            btn_run_script.Enabled = false;
+            btn_run_script.Location = new Point(795, 682);
             btn_run_script.Name = "btn_run_script";
-            btn_run_script.Size = new Size(110, 32);
+            btn_run_script.Size = new Size(110, 50);
             btn_run_script.TabIndex = 8;
             btn_run_script.Text = "运行脚本";
             btn_run_script.UseVisualStyleBackColor = true;
@@ -192,7 +198,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1543, 794);
+            ClientSize = new Size(999, 794);
             Controls.Add(btn_run_script);
             Controls.Add(btn_select_script);
             Controls.Add(tabControl1);
@@ -222,9 +228,9 @@
         private BindingSource aiboteClientManagerBindingSource;
         private Button btn_select_script;
         private Button btn_run_script;
+        private TabPage tabPage3;
         private DataGridViewTextBoxColumn keyId;
         private DataGridViewTextBoxColumn botName;
         private DataGridViewTextBoxColumn runStatus;
-        private TabPage tabPage3;
     }
 }

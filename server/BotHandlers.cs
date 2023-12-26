@@ -35,8 +35,14 @@ namespace Aibote4Sharp
             AiboteChannel? aiboteChannel = clientManager.get(keyId);
             if (aiboteChannel != null && aiboteChannel.getAibote() != null)
             {
-                aiboteChannel.getAibote().retBuffer = msg;
+                aiboteChannel.getAibote().ChannelRead0(msg);
+                aiboteChannel.getAibote().ChannelReadComplete();
             }
+        }
+
+        public override void ChannelReadComplete(IChannelHandlerContext context)
+        {
+            // nothing
         }
     }
 

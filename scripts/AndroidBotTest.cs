@@ -35,7 +35,7 @@ namespace Aibote4Sharp.scripts
 
         public override string GetScriptName()
         {
-            return "测试脚本112";
+            return "测试脚本1226";
         }
     }
 }
