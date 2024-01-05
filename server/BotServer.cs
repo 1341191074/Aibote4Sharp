@@ -112,7 +112,7 @@ namespace Aibote4Sharp
 
         public override void Handlers(IChannelPipeline pipeline)
         {
-            pipeline.AddLast("androidHandler", new AndroidHandler());
+            pipeline.AddLast("winHandler", new WinHandler());
         }
     }
 
@@ -140,7 +140,7 @@ namespace Aibote4Sharp
 
         public override void Handlers(IChannelPipeline pipeline)
         {
-            pipeline.AddLast("androidHandler", new AndroidHandler());
+            pipeline.AddLast("webHandler", new WebHandler());
         }
     }
 }
