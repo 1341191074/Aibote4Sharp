@@ -2,6 +2,7 @@
 using DotNetty.Transport.Channels;
 using Newtonsoft.Json.Linq;
 using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Aibote4Sharp.sdk
 {
@@ -1056,7 +1057,7 @@ namespace Aibote4Sharp.sdk
          * pic_str,(字符串) 识别出的结果
          * md5,(字符串) md5校验值,用来校验此条数据返回是否真实有效
          */
-        public  JObject GetCaptcha(string filePath, string username, string password, string softId, string codeType, string lenMin)
+        public JObject GetCaptcha(string filePath, string username, string password, string softId, string codeType, string lenMin)
         {
             if (string.IsNullOrEmpty(lenMin))
             {
@@ -1407,9 +1408,63 @@ namespace Aibote4Sharp.sdk
          * @param speechRate       语速，默认为0，取值范围 -100 至 200
          * @return {Promise.<bool>} 成功返回true，失败返回false
          */
-        public bool ShowSpeechText(string saveVideoFolder, string text, string language, string voiceName, string bgFilePath, int simValue, string voiceStyle, int quality, int speechRate)
+        public bool MakeMetahumanVideo(string saveVideoFolder, string text, string language, string voiceName, string bgFilePath, int simValue, string voiceStyle, int quality, int speechRate)
         {
-            return BoolCmd("showSpeechText", saveVideoFolder, text, language, voiceName, bgFilePath, simValue.ToString(), voiceStyle, quality.ToString(), speechRate.ToString());
+            return BoolCmd("makeMetahumanVideo", saveVideoFolder, text, language, voiceName, bgFilePath, simValue.ToString(), voiceStyle, quality.ToString(), speechRate.ToString());
+        }
+
+        /**初始化数字人声音克隆服务
+         * @param {string} apiKey, API密钥
+         * @param {string} voiceId, 声音ID
+         * @return {Promise.<boolean>} 成功返回true，失败返回false
+        */
+        public bool InitSpeechCloneService(string apiKey, string voiceId)
+        {
+            return BoolCmd("initSpeechCloneService", apiKey, voiceId);
+        }
+
+        /**数字人使用克隆声音说话，此函数需要调用 initSpeechCloneService 初始化语音服务
+         * @param {string} saveAudioPath, 保存的发音文件路径。这里是路径，不是目录！
+         * @param {string} text,要转换语音的文本
+         * @param {string} language，语言，中文：zh-cn，其他语言：other-languages 
+         * @param {boolean} waitPlaySound，等待音频播报完毕，默认为 true等待
+         * @return {Promise.<boolean>} 成功返回true，失败返回false
+        */
+        public bool MetahumanSpeechClone(string saveAudioPath, string text, string language, bool waitPlaySound = true)
+        {
+            return BoolCmd("metahumanSpeechClone", saveAudioPath, text, language, waitPlaySound.ToString());
+        }
+
+        /**使用克隆声音生成数字人短视频，此函数需要调用 initSpeechCloneService 初始化语音服务
+         * @param {string} saveVideoFolder, 保存的视频和音频文件目录
+         * @param {string} text,要转换语音的文本
+         * @param {string} language，语言，中文：zh-cn，其他语言：other-languages
+         * @param {string} bgFilePath,数字人背景 图片/视频 路径，扣除绿幕会自动获取绿幕的RGB值，null 则不替换背景。仅替换绿幕背景的数字人模型
+         * @param {number} simValue, 相似度，默认为0。此处参数用作绿幕扣除微调RBG值。取值应当大于等于0
+         * @return {Promise.<boolean>} 成功返回true，失败返回false
+        */
+        public bool MakeMetahumanVideoClone(string saveVideoFolder, string text, string language, string bgFilePath,int simValue = 0)
+        {
+            return BoolCmd("makeMetahumanVideoClone", saveVideoFolder, text, language, bgFilePath, simValue.ToString());
+        }
+
+        /**打断数字人说话，一般用作人机对话场景。
+         * metahumanSpeech和metahumanSpeechCache的 waitPlaySound 参数 设置为false时，此函数才有意义
+         * @return {Promise.<boolean>} 总是返回true
+        */
+        public bool MetahumanSpeechBreak()
+        {
+            return BoolCmd("metahumanSpeechBreak");
+        }
+
+        /**数字人说话文件缓存模式
+         * @param {string} audioPath, 音频路径， 同名的 .lab文件需要和音频文件在同一目录下
+         * @param {boolean} waitPlaySound，等待音频播报完毕，默认为 true等待
+         * @return {Promise.<boolean>} 成功返回true，失败返回false
+        */
+        public bool MetahumanSpeechByFile(string audioPath, bool waitPlaySound = true)
+        {
+            return BoolCmd("metahumanSpeechByFile", audioPath, waitPlaySound.ToString());
         }
 
         /**
