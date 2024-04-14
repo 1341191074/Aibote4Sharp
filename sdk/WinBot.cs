@@ -1337,15 +1337,31 @@ namespace Aibote4Sharp.sdk
          * @param voiceStyle      语音风格，默认General常规风格，其他风格参考开发文档 语言和发音人
          * @return {Promise.<bool>} 成功返回true，失败返回false
          */
-        public bool MetahumanSpeechCache(string saveVoiceFolder, string text, string language, string voiceName, int quality, bool waitPlaySound, int speechRate, string voiceStyle)
+        public bool MetahumanSpeechCache(string saveVoiceFolder, string text, string language, string voiceName, int quality, bool waitPlaySound, int speechRate, string voiceStyle= "General")
         {
-            if (string.IsNullOrEmpty(voiceStyle))
-            {
-                voiceStyle = "General";
-            }
             return this.BoolCmd("metahumanSpeechCache", saveVoiceFolder, text, language, voiceName, quality.ToString(), waitPlaySound.ToString(), speechRate.ToString(), voiceStyle);
         }
 
+        /**
+         * 数字人说话文件缓存模式
+         * @param {string} audioPath, 音频路径， 同名的 .lab文件需要和音频文件在同一目录下
+         * @param {boolean} waitPlaySound，等待音频播报完毕，默认为 true等待
+         * @return {Promise.<boolean>} 成功返回true，失败返回false
+        */
+        public bool metahumanSpeechByFile(string audioPath,bool waitPlaySound = true)
+        {
+            return this.BoolCmd("metahumanSpeechByFile", audioPath, waitPlaySound.ToString());
+        }
+
+        /**
+         * 打断数字人说话，一般用作人机对话场景。
+         * metahumanSpeech和metahumanSpeechCache的 waitPlaySound 参数 设置为false时，此函数才有意义
+         * @return {Promise.<boolean>} 返回true打断正在说话， 返回false 则为未说话状态
+        */
+        public bool metahumanSpeechBreak()
+        {
+            return this.BoolCmd("metahumanSpeechBreak");
+        }
 
         /**
          * 数字人插入视频

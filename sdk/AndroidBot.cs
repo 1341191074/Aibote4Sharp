@@ -2,6 +2,9 @@
 using Aibote4Sharp.sdk.options;
 using System.Text;
 using Newtonsoft.Json.Linq;
+using System.Security.Policy;
+using static System.Net.Mime.MediaTypeNames;
+using System;
 
 namespace Aibote4Sharp.sdk
 {
@@ -101,7 +104,7 @@ namespace Aibote4Sharp.sdk
         /// <param name="maxval">最大值</param>
         /// <param name="scale">最大值</param>
         /// <returns>byte[]</returns>
-        public byte[] TakeScreenshot(AiboteRegion region, int thresholdType = 0, int thresh = 0, int maxval = 0, float scale=1.0F)
+        public byte[] TakeScreenshot(AiboteRegion region, int thresholdType = 0, int thresh = 0, int maxval = 0, float scale = 1.0F)
         {
             if (thresholdType == 5 || thresholdType == 6)
             {
@@ -891,6 +894,18 @@ namespace Aibote4Sharp.sdk
         {
             byte[] byteData = this.bytesCmd("pullFile", androidFilePath);
             File.WriteAllBytes(windowsFilePath, byteData);
+        }
+
+
+        /// <summary>
+        /// GET 下载url文件
+        /// </summary>
+        /// <param name="">url 文件请求地址</param>
+        /// <param name="">savePath 安卓文件路径，安卓外部存储根目录 /storage/emulated/0/</param>
+        /// <returns>成功返回true，失败返回 false</returns>
+        public bool downloadFile(string url, string savePath)
+        {
+            return this.BoolCmd("writeAndroidFile", url, savePath);
         }
 
         /// <summary>
