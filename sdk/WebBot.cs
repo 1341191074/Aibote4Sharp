@@ -759,5 +759,15 @@ namespace Aibote4Sharp.sdk
         {
             return BoolCmd("touchEnd", x.ToString(), y.ToString());
         }
+
+        /**
+         * 激活框架
+         * @param {string} activateKey, 激活密钥，联系管理员
+         * @return {Promise.<boolean>} 返回激活信息
+        */
+        public bool ActivateFrame(string activateKey)
+        {
+            return BoolCmd("touchEnd", activateKey);
+        }
     }
 }
