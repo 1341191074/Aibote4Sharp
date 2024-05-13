@@ -1493,6 +1493,14 @@ namespace Aibote4Sharp.sdk
             return StrCmd("getExtendParam");
         }
 
+        /**获取Windows ID
+        * @return {Promise.<string>} 成功返回Windows ID
+        */
+        public string GetWindowsId()
+        {
+            return StrCmd("getWindowsId");
+        }
+
         /**
          * 关闭驱动
          *
