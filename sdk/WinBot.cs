@@ -1502,6 +1502,32 @@ namespace Aibote4Sharp.sdk
         }
 
         /**
+         * 切换新的人物形象动作，此函数无需训练数字人模型，直接切换各种人物形象动作和场景。
+         *
+         * @param {string} callApiKey, 调用函数的密钥
+         * @param {string} actionVideoOrImage, 闭嘴的人物视频或者图片
+         * @return {Promise.<boolean>} 成功返回true，失败返回false。调用不会立刻生效，加载完素材会自动切换
+         */
+        public bool switchAction(String callApiKey, String actionVideoOrImage)
+        {
+            return BoolCmd("switchAction", callApiKey, actionVideoOrImage);
+        }
+
+        /**
+         * 训练数字人，训练时长为10-30分钟
+         *
+         * @param {string} callApiKey, 调用函数的密钥
+         * @param {string} trainVideoOrImagePath, 闭嘴的人物视频或者图片 素材
+         * @param {string} srcMetahumanModelPath, 预训练数字人模型路径
+         * @param {string} saveHumanModelFolder, 保存训练完成的模型目录
+         * @return {Promise.<boolean>} 成功返回true，失败返回false
+         */
+        public bool trainHumanModel(String callApiKey, String trainVideoOrImagePath, String srcMetahumanModelPath, String saveHumanModelFolder)
+        {
+            return BoolCmd("trainHumanModel", callApiKey, trainVideoOrImagePath, srcMetahumanModelPath, saveHumanModelFolder);
+        }
+
+        /**
          * 关闭驱动
          *
          * @return bool
