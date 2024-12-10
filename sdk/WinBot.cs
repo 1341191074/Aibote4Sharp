@@ -1297,9 +1297,9 @@ namespace Aibote4Sharp.sdk
          * @param isUpdateMetahuman,   是否强制更新，默认fasle。为true时强制更新会拖慢初始化速度
          * @return {Promise.<bool>} 成功返回true，失败返回false
          */
-        public bool InitMetahuman(string metahumanModePath, float metahumanScaleValue, bool isUpdateMetahuman)
+        public bool InitMetahuman(string metahumanModePath, float metahumanScaleValue, bool isUpdateMetahuman, bool enableRandomImage)
         {
-            return BoolCmd("initMetahuman", metahumanModePath, metahumanScaleValue.ToString(), isUpdateMetahuman.ToString());
+            return BoolCmd("initMetahuman", metahumanModePath, metahumanScaleValue.ToString(), isUpdateMetahuman.ToString(), enableRandomImage.ToString());
         }
 
         /**
