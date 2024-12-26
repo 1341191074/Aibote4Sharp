@@ -1508,7 +1508,7 @@ namespace Aibote4Sharp.sdk
          * @param {string} actionVideoOrImage, 闭嘴的人物视频或者图片
          * @return {Promise.<boolean>} 成功返回true，失败返回false。调用不会立刻生效，加载完素材会自动切换
          */
-        public bool switchAction(String callApiKey, String actionVideoOrImage)
+        public bool SwitchAction(String callApiKey, String actionVideoOrImage)
         {
             return BoolCmd("switchAction", callApiKey, actionVideoOrImage);
         }
@@ -1522,9 +1522,96 @@ namespace Aibote4Sharp.sdk
          * @param {string} saveHumanModelFolder, 保存训练完成的模型目录
          * @return {Promise.<boolean>} 成功返回true，失败返回false
          */
-        public bool trainHumanModel(String callApiKey, String trainVideoOrImagePath, String srcMetahumanModelPath, String saveHumanModelFolder)
+        public bool TrainHumanModel(String callApiKey, String trainVideoOrImagePath, String srcMetahumanModelPath, String saveHumanModelFolder)
         {
             return BoolCmd("trainHumanModel", callApiKey, trainVideoOrImagePath, srcMetahumanModelPath, saveHumanModelFolder);
+        }
+
+        /**
+     * 切换声音克隆模型
+     *
+     * @param {string} cloneServerIp, 克隆声音服务端
+     * @param {string} gptWeightsPath, gpt 模型权重路径。指克隆服务所在的电脑/服务器 路径
+     * @param {string} sovitsWeightsPath, sovits 模型权重路径。指克隆服务所在的电脑/服务器 路径
+     * @return {Promise.<boolean>} 失败返回false,成功返回true。 切换到与原模型无关音色的模型，切记更换参考音频和文本
+     */
+        public bool SwitchCloneAudioModel(String cloneServerIp, String gptWeightsPath, String sovitsWeightsPath)
+        {
+            return this.BoolCmd("switchCloneAudioModel", cloneServerIp, gptWeightsPath, sovitsWeightsPath);
+        }
+
+        /**
+         * 重启声音克隆服务
+         *
+         * @param {string} cloneServerIp, 克隆声音服务端
+         * @return {Promise.<boolean>} 失败返回false,成功返回true。重启服务会中断连接，实际并未准确返回值。重启后模型加载需要时间，调用此函数需显示等待几秒，再去访问声音克隆服务
+         */
+        public bool RestartCloneAudioServer(String cloneServerIp)
+        {
+            return this.BoolCmd("restartCloneAudioServer", cloneServerIp);
+        }
+
+        /**
+         * 克隆声音，需要部署服务端
+         *
+         * @param {string} cloneServerIp, 克隆声音服务端
+         * @param {string} saveAudioPath, 保存克隆声音的路径
+         * @param {string} referAudioPath, 参考音频路径，3-10秒，音频时长不能大于等于10秒
+         * @param {string} referText, 参考音频对应的文本
+         * @param {string} cloneText, 要克隆的文本
+         * @param {number} speedFactor, 语速（0.5为半速，1.0为正常速度，1.5为1.5倍速，以此类推）。默认为1.0 正常语速
+         * @return {Promise.<boolean>} 失败返回false,成功返回true
+         */
+        public bool MakeCloneAudio(String cloneServerIp, String saveAudioPath, String referAudioPath, String referText, String cloneText, float speedFactor=1.0F)
+        {
+            return this.BoolCmd("makeCloneAudio", cloneServerIp, saveAudioPath, referAudioPath, referText, cloneText, speedFactor.ToString());
+        }
+
+        /// <summary>
+        /// 播报音频文件
+        /// </summary>
+        /// <param name="audioPath">音频文件路径</param>
+        /// <param name="isWait">是否等待.为true时,等待播放完毕</param>
+        /// <returns>失败返回false,成功返回true</returns>
+        public bool PlayAudio(String audioPath, bool isWait)
+        {
+            return this.BoolCmd("playAudio", audioPath, isWait.ToString());
+        }
+
+        /// <summary>
+        /// 播报视频文件
+        /// </summary>
+        /// <param name="videoPath">视频文件路径 (多个视频切换播放 视频和音频编码必须一致)</param>
+        /// <param name="videoSacle">视频缩放（0.5缩小一半，1.0为原始大小）</param>
+        /// <param name="isLoopPlay">是否循环播放</param>
+        /// <param name="enableRandomParam">是否启用随机去重参数</param>
+        /// <param name="isWait">是否等待播报完毕。 值为false时，不等待播放结束。未播报结束前再次调用此函数 会终止前面的播报内容</param>
+        /// <returns>失败返回false,成功返回true。</returns>
+        public bool PlayMedia(String videoPath, float videoSacle, bool isLoopPlay, bool enableRandomParam, bool isWait)
+        {
+            return this.BoolCmd("playMedia", videoPath, videoSacle.ToString(), isLoopPlay.ToString(), enableRandomParam.ToString(), isWait.ToString());
+        }
+ 
+        /// <summary>
+        /// 生成lab文件，需要部署服务端
+        /// </summary>
+        /// <param name="labServerIp">lab服务端IP</param>
+        /// <param name="audioPath">音频文件</param>
+        /// <returns>失败返回false,成功返回true 并生成 与 audioPath 同目录下的 .lab 后缀文件。(音频文件+lab文件可以直接驱动数字人)</returns>
+        public bool MmakeCloneLab(String labServerIp, String audioPath)
+        {
+            return this.BoolCmd("makeCloneLab", labServerIp, audioPath);
+        }
+
+        /// <summary>
+        /// 语音识别，需要部署服务端
+        /// </summary>
+        /// <param name="labServerIp">lab服务端IP</param>
+        /// <param name="audioPath">音频文件</param>
+        /// <returns>失败返回null, 成功返回识别到的内容</returns>
+        public bool CloneAudioToText(String labServerIp, String audioPath)
+        {
+            return this.BoolCmd("cloneAudioToText", labServerIp, audioPath);
         }
 
         /**
