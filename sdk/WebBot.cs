@@ -704,6 +704,16 @@ namespace Aibote4Sharp.sdk
             return BoolCmd("mobileEmulation", width.ToString(), height.ToString(), userAgent, platform, platformVersion, acceptLanguage, timezoneId, latitude.ToString(), longitude.ToString(), accuracy.ToString());
         }
 
+        /// <summary>
+        /// 设置浏览器下载目录
+        /// </summary>
+        /// <param name="downloadDir">存放下载的目录</param>
+        /// <returns>成功返回true，失败返回false</returns>
+        public bool SetDownloadDir(string downloadDir)
+        {
+            return BoolCmd("setDownloadDir", downloadDir);
+        }
+
         /**
          * 关闭浏览器
          *
