@@ -95,23 +95,23 @@ namespace Aibote4Sharp
             btn_stopServer.Enabled = false;
         }
 
-        public delegate void AddDelegate(String key);
-        public void AddClient(String key)
+        public delegate void AddDelegate(string key);
+        public void AddClient(string key)
         {
             DataRow row = aibotes.NewRow();
             row["keyId"] = key;
             aibotes.Rows.Add(row);
         }
 
-        public void refushClient(String key, Aibote aibote)
+        public void refushClient(string key, Aibote aibote)
         {
             DataRow? row = aibotes.Rows.Find(key);
             row["runStatus"] = aibote.runStatus;
             row["botName"] = aibote.GetScriptName();
         }
 
-        public delegate void RemoveDelegate(String key);
-        public void RemoveClient(String key)
+        public delegate void RemoveDelegate(string key);
+        public void RemoveClient(string key)
         {
             DataRow? row = aibotes.Rows.Find(key);
             aibotes.Rows.Remove(row);

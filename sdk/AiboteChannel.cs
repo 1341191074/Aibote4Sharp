@@ -9,7 +9,7 @@ namespace Aibote4Sharp.sdk
             this.aiboteChanel = aiboteChanel;
         }
 
-        public String keyId { get; set; }
+        public string keyId { get; set; }
         public ClientType clientType { get; set; }
         public IChannelHandlerContext aiboteChanel { get; set; }
         private Aibote aibote;

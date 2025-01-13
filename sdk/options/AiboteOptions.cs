@@ -52,7 +52,7 @@ namespace Aibote4Sharp.sdk.options
          *
          * @return
          */
-        public String gesturePathStr()
+        public string gesturePathStr()
         {
             return GesturePathStr.ToString();
         }
@@ -62,7 +62,7 @@ namespace Aibote4Sharp.sdk.options
          *
          * @return
          */
-        public String gesturePathStr(String s)
+        public string gesturePathStr(string s)
         {
             GesturePathStr.Append(s);
             return GesturePathStr.ToString();

@@ -1337,7 +1337,7 @@ namespace Aibote4Sharp.sdk
          * @param voiceStyle      语音风格，默认General常规风格，其他风格参考开发文档 语言和发音人
          * @return {Promise.<bool>} 成功返回true，失败返回false
          */
-        public bool MetahumanSpeechCache(string saveVoiceFolder, string text, string language, string voiceName, int quality, bool waitPlaySound, int speechRate, string voiceStyle= "General")
+        public bool MetahumanSpeechCache(string saveVoiceFolder, string text, string language, string voiceName, int quality, bool waitPlaySound, int speechRate, string voiceStyle = "General")
         {
             return this.BoolCmd("metahumanSpeechCache", saveVoiceFolder, text, language, voiceName, quality.ToString(), waitPlaySound.ToString(), speechRate.ToString(), voiceStyle);
         }
@@ -1348,9 +1348,21 @@ namespace Aibote4Sharp.sdk
          * @param {boolean} waitPlaySound，等待音频播报完毕，默认为 true等待
          * @return {Promise.<boolean>} 成功返回true，失败返回false
         */
-        public bool metahumanSpeechByFile(string audioPath,bool waitPlaySound = true)
+        public bool metahumanSpeechByFile(string audioPath, bool waitPlaySound = true)
         {
             return this.BoolCmd("metahumanSpeechByFile", audioPath, waitPlaySound.ToString());
+        }
+
+        /// <summary>
+        /// 数字人说话文件缓存模式(Ex) metahumanSpeechByFileEx 不能与 PlayAudioEx 同步执行
+        /// </summary>
+        /// <param name="audioPath">音频路径， 同名的 .lab文件需要和音频文件在同一目录下。若.lab文件不存在，则自动生成.lab文件。生成.lab文件产生的费用，请联系管理员</param>
+        /// <param name="enableRandomParam">是否启用随机去重参数</param>
+        /// <param name="waitPlaySound">等待音频播报完毕，默认为 true等待。为false时 多次调用此函数会添加到队列按顺序播报</param>
+        /// <returns></returns>
+        public bool metahumanSpeechByFileEx(string audioPath, bool enableRandomParam, bool waitPlaySound = true)
+        {
+            return this.BoolCmd("metahumanSpeechByFileEx", audioPath, enableRandomParam.ToString(), waitPlaySound.ToString());
         }
 
         /**
@@ -1459,7 +1471,7 @@ namespace Aibote4Sharp.sdk
          * @param {number} simValue, 相似度，默认为0。此处参数用作绿幕扣除微调RBG值。取值应当大于等于0
          * @return {Promise.<boolean>} 成功返回true，失败返回false
         */
-        public bool MakeMetahumanVideoClone(string saveVideoFolder, string text, string language, string bgFilePath,int simValue = 0)
+        public bool MakeMetahumanVideoClone(string saveVideoFolder, string text, string language, string bgFilePath, int simValue = 0)
         {
             return BoolCmd("makeMetahumanVideoClone", saveVideoFolder, text, language, bgFilePath, simValue.ToString());
         }
@@ -1508,7 +1520,7 @@ namespace Aibote4Sharp.sdk
          * @param {string} actionVideoOrImage, 闭嘴的人物视频或者图片
          * @return {Promise.<boolean>} 成功返回true，失败返回false。调用不会立刻生效，加载完素材会自动切换
          */
-        public bool SwitchAction(String callApiKey, String actionVideoOrImage)
+        public bool SwitchAction(string callApiKey, string actionVideoOrImage)
         {
             return BoolCmd("switchAction", callApiKey, actionVideoOrImage);
         }
@@ -1522,7 +1534,7 @@ namespace Aibote4Sharp.sdk
          * @param {string} saveHumanModelFolder, 保存训练完成的模型目录
          * @return {Promise.<boolean>} 成功返回true，失败返回false
          */
-        public bool TrainHumanModel(String callApiKey, String trainVideoOrImagePath, String srcMetahumanModelPath, String saveHumanModelFolder)
+        public bool TrainHumanModel(string callApiKey, string trainVideoOrImagePath, string srcMetahumanModelPath, string saveHumanModelFolder)
         {
             return BoolCmd("trainHumanModel", callApiKey, trainVideoOrImagePath, srcMetahumanModelPath, saveHumanModelFolder);
         }
@@ -1535,7 +1547,7 @@ namespace Aibote4Sharp.sdk
      * @param {string} sovitsWeightsPath, sovits 模型权重路径。指克隆服务所在的电脑/服务器 路径
      * @return {Promise.<boolean>} 失败返回false,成功返回true。 切换到与原模型无关音色的模型，切记更换参考音频和文本
      */
-        public bool SwitchCloneAudioModel(String cloneServerIp, String gptWeightsPath, String sovitsWeightsPath)
+        public bool SwitchCloneAudioModel(string cloneServerIp, string gptWeightsPath, string sovitsWeightsPath)
         {
             return this.BoolCmd("switchCloneAudioModel", cloneServerIp, gptWeightsPath, sovitsWeightsPath);
         }
@@ -1546,7 +1558,7 @@ namespace Aibote4Sharp.sdk
          * @param {string} cloneServerIp, 克隆声音服务端
          * @return {Promise.<boolean>} 失败返回false,成功返回true。重启服务会中断连接，实际并未准确返回值。重启后模型加载需要时间，调用此函数需显示等待几秒，再去访问声音克隆服务
          */
-        public bool RestartCloneAudioServer(String cloneServerIp)
+        public bool RestartCloneAudioServer(string cloneServerIp)
         {
             return this.BoolCmd("restartCloneAudioServer", cloneServerIp);
         }
@@ -1562,7 +1574,7 @@ namespace Aibote4Sharp.sdk
          * @param {number} speedFactor, 语速（0.5为半速，1.0为正常速度，1.5为1.5倍速，以此类推）。默认为1.0 正常语速
          * @return {Promise.<boolean>} 失败返回false,成功返回true
          */
-        public bool MakeCloneAudio(String cloneServerIp, String saveAudioPath, String referAudioPath, String referText, String cloneText, float speedFactor=1.0F)
+        public bool MakeCloneAudio(string cloneServerIp, string saveAudioPath, string referAudioPath, string referText, string cloneText, float speedFactor = 1.0F)
         {
             return this.BoolCmd("makeCloneAudio", cloneServerIp, saveAudioPath, referAudioPath, referText, cloneText, speedFactor.ToString());
         }
@@ -1573,9 +1585,14 @@ namespace Aibote4Sharp.sdk
         /// <param name="audioPath">音频文件路径</param>
         /// <param name="isWait">是否等待.为true时,等待播放完毕</param>
         /// <returns>失败返回false,成功返回true</returns>
-        public bool PlayAudio(String audioPath, bool isWait)
+        public bool PlayAudio(string audioPath, bool isWait)
         {
             return this.BoolCmd("playAudio", audioPath, isWait.ToString());
+        }
+
+        public bool playAudioEx(string audioPath, bool enableRandomParam, bool isWait)
+        {
+            return this.BoolCmd("playAudioEx", audioPath, enableRandomParam.ToString(), isWait.ToString());
         }
 
         /// <summary>
@@ -1587,18 +1604,28 @@ namespace Aibote4Sharp.sdk
         /// <param name="enableRandomParam">是否启用随机去重参数</param>
         /// <param name="isWait">是否等待播报完毕。 值为false时，不等待播放结束。未播报结束前再次调用此函数 会终止前面的播报内容</param>
         /// <returns>失败返回false,成功返回true。</returns>
-        public bool PlayMedia(String videoPath, float videoSacle, bool isLoopPlay, bool enableRandomParam, bool isWait)
+        public bool PlayMedia(string videoPath, float videoSacle, bool isLoopPlay, bool enableRandomParam, bool isWait)
         {
             return this.BoolCmd("playMedia", videoPath, videoSacle.ToString(), isLoopPlay.ToString(), enableRandomParam.ToString(), isWait.ToString());
         }
- 
+
+        /// <summary>
+        /// 调节 playMedia 音量大小(底层用的内存共享，支持多进程控制)
+        /// </summary>
+        /// <param name="volumeScale">音量缩放（0.5调低一半，1.0为原始音量大小）。默认为原始大小</param>
+        /// <returns>失败返回false,成功返回true。</returns>
+        public bool setMediaVolumeScale(float volumeScale = 1.0F)
+        {
+            return this.BoolCmd("setMediaVolumeScale", volumeScale.ToString());
+        }
+
         /// <summary>
         /// 生成lab文件，需要部署服务端
         /// </summary>
         /// <param name="labServerIp">lab服务端IP</param>
         /// <param name="audioPath">音频文件</param>
         /// <returns>失败返回false,成功返回true 并生成 与 audioPath 同目录下的 .lab 后缀文件。(音频文件+lab文件可以直接驱动数字人)</returns>
-        public bool MmakeCloneLab(String labServerIp, String audioPath)
+        public bool MmakeCloneLab(string labServerIp, string audioPath)
         {
             return this.BoolCmd("makeCloneLab", labServerIp, audioPath);
         }
@@ -1609,7 +1636,7 @@ namespace Aibote4Sharp.sdk
         /// <param name="labServerIp">lab服务端IP</param>
         /// <param name="audioPath">音频文件</param>
         /// <returns>失败返回null, 成功返回识别到的内容</returns>
-        public bool CloneAudioToText(String labServerIp, String audioPath)
+        public bool CloneAudioToText(string labServerIp, string audioPath)
         {
             return this.BoolCmd("cloneAudioToText", labServerIp, audioPath);
         }
